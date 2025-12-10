@@ -12,13 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('students', function (Blueprint $table) {
-        $table->id();
-        $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-        $table->string('level');
-        $table->string('group');
-        $table->foreignId('department_id')->nullable()->constrained();
-        $table->timestamps();
-    });
+            $table->id();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('phone')->nullable();
+            $table->string('level'); // المستوى
+            $table->string('group'); // الفوج
+            $table->foreignId('department_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('institute_id')->nullable()->constrained()->onDelete('set null');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -26,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('studets');
+        Schema::dropIfExists('students');
     }
 };

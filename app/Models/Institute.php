@@ -23,4 +23,12 @@ class Institute extends Model
     {
         return $this->hasMany(Department::class);
     }
+
+    /**
+     * Get the students for the institute.
+     */
+    public function students()
+    {
+        return $this->hasMany(Student::class);
+    }
 }
