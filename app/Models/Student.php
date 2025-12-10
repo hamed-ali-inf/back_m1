@@ -5,22 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Institute extends Model
+class Student extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'department_id',
         'name',
-        'location',
         'email',
-        'phone'
+        // أي حقول أخرى لديك في جدول students
     ];
 
-    /**
-     * Get the departments for the institute.
-     */
-    public function departments()
+    public function department()
     {
-        return $this->hasMany(Department::class);
+        return $this->belongsTo(Department::class);
     }
 }
