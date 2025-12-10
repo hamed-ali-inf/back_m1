@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InstituteController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\UserController;
 
 
 // Test route
@@ -21,3 +23,7 @@ Route::apiResource('institutes', InstituteController::class);
 
 // Department Routes
 Route::apiResource('departments', DepartmentController::class);
+
+Route::apiResource('teachers', TeacherController::class);
+
+Route::apiResource('users', UserController::class);
