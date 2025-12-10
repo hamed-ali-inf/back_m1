@@ -14,6 +14,11 @@ class Schedule extends Model
         'classroom',
     ];
 
+    protected $casts = [
+        'start_time' => 'string',
+        'end_time' => 'string',
+    ];
+
     /**
      * علاقة الجدول الزمني بالدورة
      */
