@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\InstituteController;
+use App\Http\Controllers\DepartmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +16,22 @@ use App\Http\Controllers\TeacherController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+// Test route
+Route::get('/test', function () {
+    return response()->json(['message' => 'API is working!']);
+});
+
+// User route (requires authentication)
+Route::get('/user', function (Request $request) {
+    return $request->user();
+})->middleware('auth:sanctum');
+
+// Institute Routes
+Route::apiResource('institutes', InstituteController::class);
+
+// Department Routes
+Route::apiResource('departments', DepartmentController::class);
 
 // Routes للمعلمين - تتطلب المصادقة
 Route::middleware('auth:sanctum')->prefix('teacher')->name('teacher.')->group(function () {
@@ -55,6 +73,3 @@ Route::middleware('auth:sanctum')->prefix('teacher')->name('teacher.')->group(fu
         Route::delete('/{announcementId}', [TeacherController::class, 'deleteAnnouncement'])->name('delete');
     });
 });
-
-
-
