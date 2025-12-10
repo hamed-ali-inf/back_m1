@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\DocumentRequestController;
+use App\Http\Controllers\AnnouncementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +71,20 @@ Route::post('document-requests/{documentRequest}/reject', [DocumentRequestContro
 Route::post('document-requests/{documentRequest}/complete', [DocumentRequestController::class, 'complete']);
 Route::post('document-requests/{documentRequest}/cancel', [DocumentRequestController::class, 'cancel']);
 Route::get('document-requests-statistics', [DocumentRequestController::class, 'statistics']);
+
+// Announcement Routes
+Route::apiResource('announcements', AnnouncementController::class);
+
+// Custom Announcement Routes
+Route::post('announcements/{announcement}/publish', [AnnouncementController::class, 'publish']);
+Route::post('announcements/{announcement}/archive', [AnnouncementController::class, 'archive']);
+Route::post('announcements/{announcement}/toggle-pin', [AnnouncementController::class, 'togglePin']);
+Route::get('announcements/student/{studentId}', [AnnouncementController::class, 'getForStudent']);
+Route::get('announcements-urgent', [AnnouncementController::class, 'getUrgent']);
+Route::get('announcements-pinned', [AnnouncementController::class, 'getPinned']);
+Route::get('announcements-statistics', [AnnouncementController::class, 'statistics']);
+Route::get('announcements-search', [AnnouncementController::class, 'search']);
+Route::post('announcements-update-expired', [AnnouncementController::class, 'updateExpired']);
 
 // Routes للمعلمين - تتطلب المصادقة
 Route::middleware('auth:sanctum')->prefix('teacher')->name('teacher.')->group(function () {
