@@ -8,6 +8,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\DocumentRequestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +60,16 @@ Route::get('schedules/course/{courseId}', [ScheduleController::class, 'getByCour
 Route::get('schedules/teacher/{teacherId}', [ScheduleController::class, 'getByTeacher']);
 Route::get('schedules/level/{level}', [ScheduleController::class, 'getByLevel']);
 Route::get('schedules/day/{day}', [ScheduleController::class, 'getByDay']);
+
+// Document Request Routes
+Route::apiResource('document-requests', DocumentRequestController::class);
+
+// Custom Document Request Routes
+Route::post('document-requests/{documentRequest}/approve', [DocumentRequestController::class, 'approve']);
+Route::post('document-requests/{documentRequest}/reject', [DocumentRequestController::class, 'reject']);
+Route::post('document-requests/{documentRequest}/complete', [DocumentRequestController::class, 'complete']);
+Route::post('document-requests/{documentRequest}/cancel', [DocumentRequestController::class, 'cancel']);
+Route::get('document-requests-statistics', [DocumentRequestController::class, 'statistics']);
 
 // Routes للمعلمين - تتطلب المصادقة
 Route::middleware('auth:sanctum')->prefix('teacher')->name('teacher.')->group(function () {
