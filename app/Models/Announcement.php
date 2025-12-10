@@ -7,13 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Announcement extends Model
 {
     protected $fillable = [
+        'sender_id',
         'title',
         'content',
-        'level',
-        'department_id',
-        'institute_id',
-        'user_id'
+        'target_type',
+        'target_id',
     ];
 
-    public function user() { return $this->belongsTo(User::class); }
+    public function sender()
+    {
+        return $this->belongsTo(User::class, 'sender_id');
+    }
 }

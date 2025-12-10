@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Teacher extends Model
 {
-    protected $fillable = ['department_id', 'name', 'email'];
+    protected $fillable = ['user_id', 'department_id'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function department()
     {
@@ -16,6 +21,26 @@ class Teacher extends Model
     public function courses()
     {
         return $this->hasMany(Course::class);
+    }
+
+    public function schedules()
+    {
+        return $this->hasManyThrough(Schedule::class, Course::class);
+    }
+
+    public function receivedMessages()
+    {
+        return $this->hasMany(ChatMessage::class, 'receiver_id', 'user_id');
+    }
+
+    public function sentMessages()
+    {
+        return $this->hasMany(ChatMessage::class, 'sender_id', 'user_id');
+    }
+
+    public function announcements()
+    {
+        return $this->hasMany(Announcement::class, 'sender_id', 'user_id');
     }
 }
 
