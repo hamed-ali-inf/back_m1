@@ -21,7 +21,6 @@ class Course extends Model
         return $this->belongsTo(Teacher::class);
     }
 
-<<<<<<< HEAD
     /**
      * علاقة الدورة بالجداول الزمنية
      */

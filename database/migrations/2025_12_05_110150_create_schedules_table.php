@@ -12,14 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('schedules', function (Blueprint $table) {
-    $table->id();
-    $table->foreignId('course_id')->constrained()->cascadeOnDelete();
-    $table->string('day');
-    $table->time('start_time');
-    $table->time('end_time');
-    $table->string('classroom');
-    $table->timestamps();
-});
+            $table->id();
+            $table->foreignId('course_id')->constrained()->onDelete('cascade');
+            $table->enum('day', ['السبت', 'الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'])
+                  ->default('السبت');
+            $table->time('start_time');
+            $table->time('end_time');
+            $table->string('classroom')->nullable();
+            $table->text('notes')->nullable(); // ملاحظات إضافية
+            $table->timestamps();
+        });
 
     }
 

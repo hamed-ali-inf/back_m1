@@ -7,6 +7,7 @@ use App\Http\Controllers\InstituteController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\ScheduleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,15 @@ Route::get('students/{id}/announcements', [StudentController::class, 'getAnnounc
 Route::get('students/{id}/document-requests', [StudentController::class, 'getDocumentRequests']);
 Route::post('students/{id}/request-document', [StudentController::class, 'requestDocument']);
 Route::post('students/{id}/send-message/{teacherId}', [StudentController::class, 'sendMessageToTeacher']);
+
+// Schedule Routes
+Route::apiResource('schedules', ScheduleController::class);
+
+// Custom Schedule Routes
+Route::get('schedules/course/{courseId}', [ScheduleController::class, 'getByCourse']);
+Route::get('schedules/teacher/{teacherId}', [ScheduleController::class, 'getByTeacher']);
+Route::get('schedules/level/{level}', [ScheduleController::class, 'getByLevel']);
+Route::get('schedules/day/{day}', [ScheduleController::class, 'getByDay']);
 
 // Routes للمعلمين - تتطلب المصادقة
 Route::middleware('auth:sanctum')->prefix('teacher')->name('teacher.')->group(function () {
