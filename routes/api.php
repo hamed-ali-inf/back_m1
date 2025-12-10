@@ -10,6 +10,8 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\DocumentRequestController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ChatMessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,6 +87,31 @@ Route::get('announcements-pinned', [AnnouncementController::class, 'getPinned'])
 Route::get('announcements-statistics', [AnnouncementController::class, 'statistics']);
 Route::get('announcements-search', [AnnouncementController::class, 'search']);
 Route::post('announcements-update-expired', [AnnouncementController::class, 'updateExpired']);
+
+// Chat Routes
+Route::apiResource('chats', ChatController::class);
+
+// Custom Chat Routes
+Route::post('chats/{chat}/send-message', [ChatController::class, 'sendMessage']);
+Route::post('chats/{chat}/upload-file', [ChatController::class, 'uploadFile']);
+Route::post('chats/{chat}/add-participant', [ChatController::class, 'addParticipant']);
+Route::delete('chats/{chat}/remove-participant', [ChatController::class, 'removeParticipant']);
+Route::post('chats/{chat}/mark-as-read', [ChatController::class, 'markAsRead']);
+Route::get('chats/{chat}/search-messages', [ChatController::class, 'searchMessages']);
+Route::post('chats/create-student-teacher', [ChatController::class, 'createStudentTeacherChat']);
+Route::get('chats-statistics', [ChatController::class, 'getStatistics']);
+
+// Chat Messages Routes
+Route::get('chats/{chat}/messages', [ChatMessageController::class, 'index']);
+Route::get('chat-messages/{message}', [ChatMessageController::class, 'show']);
+Route::put('chat-messages/{message}', [ChatMessageController::class, 'update']);
+Route::delete('chat-messages/{message}', [ChatMessageController::class, 'destroy']);
+Route::post('chat-messages/{message}/reply', [ChatMessageController::class, 'reply']);
+Route::post('chat-messages/{message}/mark-as-read', [ChatMessageController::class, 'markAsRead']);
+Route::get('chat-messages/{message}/replies', [ChatMessageController::class, 'getReplies']);
+Route::get('chat-messages/{message}/download', [ChatMessageController::class, 'downloadFile']);
+Route::get('chat-messages-search', [ChatMessageController::class, 'globalSearch']);
+Route::get('chats/{chat}/messages-statistics', [ChatMessageController::class, 'getStatistics']);
 
 // Routes للمعلمين - تتطلب المصادقة
 Route::middleware('auth:sanctum')->prefix('teacher')->name('teacher.')->group(function () {
