@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
 
 class UserController extends Controller
 {
@@ -36,6 +38,34 @@ class UserController extends Controller
 
         return response()->json($user, 201);
     }
+
+
+/**
+     * user login.
+     */
+
+      public function login(Request $request){$request->validate(['email' => 'required|email','password' => 'required|string',]);
+
+            $user = User::where('email', $request->email)->first();
+
+            if (!$user || !Hash::check($request->password, $user->password)) {
+                return response()->json([
+                    'message' => 'بيانات الدخول غير صحيحة'
+                ], 401);
+            }
+
+
+            $user->tokens()->delete();
+
+            $token = $user->createToken('auth_token')->plainTextToken;
+
+            return response()->json([
+                'user' => $user,
+                'token' => $token,
+                'token_type' => 'Bearer'
+            ]);
+        }
+
 
     /**
      * Display the specified resource.

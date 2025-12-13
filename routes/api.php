@@ -29,6 +29,10 @@ Route::get('/test', function () {
     return response()->json(['message' => 'API is working!']);
 });
 
+// Auth APIs Public
+Route::post('/register', [UserController::class, 'store']);
+Route::post('/login', [UserController::class, 'login']);
+
 // User route (requires authentication)
 Route::get('/user', function (Request $request) {
     return $request->user();
